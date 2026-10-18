@@ -87,7 +87,7 @@ docker run -d --name server-apache -P mi-apache:2.0
 Con un puerto aleatorio asignado por Docker, en mi caso el 32768, que se enlaza con el puerto 80 del contenedor.
 
 **¿Qué es una imagen huérfana?**  
-Es una imagen sin nombre ni etiqueta (<none>:<none>). Queda así cuando se reconstruye una imagen con el mismo nombre y tag: la versión anterior pierde su etiqueta y ya no está asociada a ningún nombre.
+Es una imagen sin nombre ni etiqueta (`<none>`:`<none>`). Queda así cuando se reconstruye una imagen con el mismo nombre y tag: la versión anterior pierde su etiqueta y ya no está asociada a ningún nombre.
 
 ### Identificar imágenes huérfanas
 ```

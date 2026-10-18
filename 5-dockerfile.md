@@ -53,17 +53,22 @@ docker build -t <nombre imagen>:<tag> .
 ### Ejecutar el archivo Dockerfile y construir una imagen en la versión 1.0
 No olvides verificar en qué directorio se encuentra el archivo Dockerfile
 ```
-
+docker build -t mi-apache:1.0 .
 ```
 
-**¿Cuántos pasos se han ejecutado?**
-# RESPONDER 
+**¿Cuántos pasos se han ejecutado?**  
+Se ejecutaron 5 pasos. Al construir la imagen salió un error en RUN yum update -y porque los repositorios de centos:7 ya no están disponibles. Para solucionarlo agregué una línea con sed después del FROM, que reemplaza mirror.centos.org por vault.centos.org (el archivo histórico de CentOS), y así el build terminó bien.
 
 ### Inspeccionar la imagen creada
-# COMPLETAR CON UNA CAPTURA
+<img width="670" height="841" alt="image" src="https://github.com/user-attachments/assets/774c0e39-43e6-4c0a-ab92-173836085a6c" />
+
 
 **Modificar el archivo index.html para incluir su nombre y luego crear una nueva versión de la imagen anterior**
-**¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen**
+**¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen**  
+```
+docker build -t mi-apache:2.0 .  
+```
+Se ejecutaron 5 pasos. Lo diferente es que los pasos del 1 al 4 (FROM, RUN sed, RUN yum update y RUN yum install) salieron como CACHED, porque no cambiaron y Docker reutilizó sus capas. Solo se volvió a ejecutar el COPY, ya que index.html fue modificado, y por eso la construcción fue mucho más rápida.
 
 ## Mecanismo de caché
 Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso de construcción y evitar la repetición de pasos que no han cambiado. Cada instrucción en un Dockerfile crea una capa en la imagen final. Docker intenta reutilizar las capas de una construcción anterior si no han cambiado, lo que reduce significativamente el tiempo de construcción.
@@ -75,14 +80,14 @@ Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso
 
 ### Crear un contenedor a partir de las imagen creada, mapear todos los puertos
 ```
-
+docker run -d --name server-apache -P mi-apache:2.0
 ```
 
-### ¿Con que puerto host se está realizando el mapeo?
-# COMPLETAR CON LA RESPUESTA
+### ¿Con que puerto host se está realizando el mapeo?  
+Con un puerto aleatorio asignado por Docker, en mi caso el 32768, que se enlaza con el puerto 80 del contenedor.
 
-**¿Qué es una imagen huérfana?**
-# COMPLETAR CON LA RESPUESTA
+**¿Qué es una imagen huérfana?**  
+Es una imagen sin nombre ni etiqueta (<none>:<none>). Queda así cuando se reconstruye una imagen con el mismo nombre y tag: la versión anterior pierde su etiqueta y ya no está asociada a ningún nombre.
 
 ### Identificar imágenes huérfanas
 ```

@@ -8,4 +8,8 @@ Si solucionó un problema presentado al realizar la práctica también se debe d
 
 **Problema solucionado:** Al construir la imagen con `FROM centos:7`, el paso `RUN yum update -y` falló con el error "Cannot find a valid baseurl for repo: base/7/x86_64", porque los repositorios de CentOS 7 ya no están disponibles. Lo solucioné agregando una línea al Dockerfile, justo después del `FROM`, que redirige los repositorios a `vault.centos.org`:
 
+**Comandos adicionales utilizados:**
+- `echo %NUMBER_OF_PROCESSORS%`: consultar el número de procesadores lógicos del equipo (en CMD de Windows).
+- `docker info --format "{{.NCPU}}"`: consultar cuántos procesadores ve Docker para los contenedores.
+  
 **Beneficio profesional:** Estos conocimientos me permiten crear imágenes propias, controlar los recursos de cada contenedor y hacer que los servicios se recuperen solos ante fallos, lo que es útil para desplegar aplicaciones de forma estable en proyectos reales.

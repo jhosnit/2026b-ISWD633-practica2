@@ -9,8 +9,15 @@ Asignar núcleos de CPU específicos:
 --cpuset-cpus=<lista de núcleos>
 ```
 
-**¿Como saber el numero de procesadores virtuales que tiene una máquina?**
-## COMPLETAR
+**¿Como saber el numero de procesadores virtuales que tiene una máquina?**  
+En windows podemos usar el comando
+```
+echo %NUMBER_OF_PROCESSORS%
+```
+En docker podemos usar el comando
+```
+docker info --format "{{.NCPU}}"
+```
 
 ## Ejemplos
 _Puedes copiar y ejecutar directamente cada uno de los comandos_
